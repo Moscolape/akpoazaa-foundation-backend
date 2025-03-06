@@ -7,25 +7,30 @@ const contactRoutes = require("./routes/contactRoutes");
 const app = express();
 app.use(express.json());
 
-const allowedOrigins = ["http://localhost:5174", "https://akpoazaafoundation.org"];
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:5174",
+  "https://akpoazaafoundation.org",
+];
 
-app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, origin); // ✅ Allow the request if the origin is in the list
-    } else {
-      callback(new Error("Not allowed by CORS")); // ❌ Reject if not in the list
-    }
-  },
-  methods: ["POST", "GET", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true
-}));
-
-
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, origin); // ✅ Allow the request if the origin is in the list
+      } else {
+        callback(new Error("Not allowed by CORS")); // ❌ Reject if not in the list
+      }
+    },
+    methods: ["POST", "GET", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI)
+mongoose
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.log("MongoDB Connection Error:", err));
 
