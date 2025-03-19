@@ -28,11 +28,30 @@ exports.registerScholarship = async (req, res) => {
 };
 
 // Get all scholarship applicants
-exports.getAllScholarshipApplicants = async (req, res) => {
-  try {
-    const applicants = await Scholarship.find();
-    res.status(200).json(applicants);
-  } catch (error) {
-    res.status(500).json({ message: "Server Error", error: error.message });
-  }
-};
+exports.getAllScholarshipApplicants = async (req, res, next) => {
+    const page = parseInt(req.query.page) || 1;
+    const perPage = parseInt(req.query.perPage) || 10;
+  
+    try {
+      const totalApplicants = await Scholarship.countDocuments();
+      const applicants = await Scholarship.find()
+        .sort({ createdAt: -1 })
+        .skip((page - 1) * perPage)
+        .limit(perPage);
+  
+      res.status(200).json({
+        message: "Scholarship applicants fetched successfully!",
+        applicants,
+        totalApplicants,
+        currentPage: page,
+        totalPages: Math.ceil(totalApplicants / perPage),
+        perPage,
+      });
+    } catch (error) {
+      if (!error.statusCode) {
+        error.statusCode = 500;
+      }
+      next(error);
+    }
+  };
+  
