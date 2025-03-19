@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const contactRoutes = require("./routes/contactRoutes");
+const scholarshipRoutes = require("./routes/scholarshipRoutes");
 
 const app = express();
 app.use(express.json());
@@ -36,6 +37,7 @@ mongoose
 
 // Use routes
 app.use("/api", contactRoutes);
+app.use("/api/scholarship", scholarshipRoutes);
 
 const PORT = 8000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
