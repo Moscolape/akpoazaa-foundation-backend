@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const scholarshipSchema = new mongoose.Schema(
   {
     fullName: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
     gender: { type: String, enum: ["Male", "Female"], required: true },
     dob: { type: String, required: true },
     village: { type: String, required: true },
@@ -33,6 +34,9 @@ const scholarshipSchema = new mongoose.Schema(
     referralPhone: { type: String },
     reason: { type: String, required: true },
     declaration: { type: Boolean, required: true },
+    isVerified: { type: Boolean, default: false },
+    verificationToken: { type: String },
+    verificationTokenExpires: { type: Date }
   },
   { timestamps: true }
 );
