@@ -146,10 +146,17 @@ exports.registerFoundationScholarship = async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
+    if (!req.files.passport) {
+    return res
+      .status(400)
+      .json({ message: "Required file is missing!" });
+  }
+
   const { email, fullName } = req.body;
 
   try {
-    // Check if the email already exists
+    const passport = req.files.passport[0].path.replace(/\\/g, "/");
+
     const existingUser = await FoundationScholarship.findOne({ email });
 
     if (existingUser) {
@@ -162,14 +169,13 @@ exports.registerFoundationScholarship = async (req, res) => {
       return res.status(400).json({ message: "Email already exists!" });
     }
 
-    // Generate a verification token (valid for 1 hour)
     const token = jwt.sign({ email }, process.env.JWT_SECRET, {
       expiresIn: "1hr",
     });
 
-    // Save verification token in the database
     const newScholarship = new FoundationScholarship({
       ...req.body,
+      passport,
       isVerified: false,
       verificationToken: token,
       verificationTokenExpires: new Date(Date.now() + 3600000),

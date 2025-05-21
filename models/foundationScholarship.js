@@ -15,6 +15,7 @@ const foundationScholarshipSchema = new mongoose.Schema(
       required: true,
     },
     class: { type: String, required: true },
+    passport: { type: String, required: true },
     guardianName: { type: String, required: true },
     relationshipWithWard: {
       type: String,
@@ -36,10 +37,13 @@ const foundationScholarshipSchema = new mongoose.Schema(
     declaration: { type: Boolean, required: true },
     isVerified: { type: Boolean, default: false },
     verificationToken: { type: String },
-    verificationTokenExpires: { type: Date }
+    verificationTokenExpires: { type: Date },
   },
   { timestamps: true }
 );
 
-const FoundationScholarship = mongoose.model("FoundationScholarship", foundationScholarshipSchema);
+const FoundationScholarship = mongoose.model(
+  "FoundationScholarship",
+  foundationScholarshipSchema
+);
 module.exports = FoundationScholarship;
