@@ -6,6 +6,7 @@ const foundationScholarshipSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true },
     gender: { type: String, enum: ["Male", "Female"], required: true },
     dob: { type: String, required: true },
+    stateResidence: { type: String, required: true },
     stateOrigin: { type: String, required: true },
     lgaOrigin: { type: String, required: true },
     category: {
@@ -13,6 +14,7 @@ const foundationScholarshipSchema = new mongoose.Schema(
       enum: ["Primary", "Secondary", "Tertiary"],
       required: true,
     },
+    class: { type: String, required: true },
     guardianName: { type: String, required: true },
     relationshipWithWard: {
       type: String,
