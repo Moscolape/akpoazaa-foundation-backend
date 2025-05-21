@@ -86,7 +86,7 @@ exports.verifyEmail = async (req, res) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await Scholarship.findOne({ email: decoded.email });
+    const user = await FoundationScholarship.findOne({ email: decoded.email });
     
     if (!user) {
       return res.status(400).json({ message: "User not found" });
