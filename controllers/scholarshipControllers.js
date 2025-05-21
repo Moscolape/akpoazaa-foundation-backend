@@ -213,7 +213,7 @@ exports.registerFoundationScholarship = async (req, res) => {
 
     res.status(200).json({
       message:
-        "Verification email sent!! Please check your inbox (also check your spam folder).",
+        "Registration successful! An email verification link has been sent to your mailbox!! (Please check your spam folder as well).",
     });
   } catch (error) {
     console.error("Server Error:", error);
