@@ -220,3 +220,31 @@ exports.registerFoundationScholarship = async (req, res) => {
     res.status(500).json({ message: "Server Error", error: error.message });
   }
 };
+
+// Get all scholarship applicants
+exports.getAllAkpoazaaScholarshipApplicants = async (req, res, next) => {
+  const page = parseInt(req.query.page) || 1;
+  const perPage = parseInt(req.query.perPage) || 10;
+
+  try {
+    const totalApplicants = await FoundationScholarship.countDocuments();
+    const applicants = await FoundationScholarship.find()
+      .sort({ createdAt: -1 })
+      .skip((page - 1) * perPage)
+      .limit(perPage);
+
+    res.status(200).json({
+      message: "Foundation scholarship applicants fetched successfully!",
+      applicants,
+      totalApplicants,
+      currentPage: page,
+      totalPages: Math.ceil(totalApplicants / perPage),
+      perPage,
+    });
+  } catch (error) {
+    if (!error.statusCode) {
+      error.statusCode = 500;
+    }
+    next(error);
+  }
+};

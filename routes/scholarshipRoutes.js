@@ -4,13 +4,12 @@ const {
   registerFoundationScholarship,
   getAllScholarshipApplicants,
   verifyEmail,
+  getAllAkpoazaaScholarshipApplicants
 } = require("../controllers/scholarshipControllers");
 const upload = require("../config/multerConfig");
 
-
 const router = express.Router();
 
-// POST /scholarship/register - Register Scholarship Applicant
 router.post("/register", registerScholarship);
 router.post(
   "/foundation/register",
@@ -18,8 +17,8 @@ router.post(
   registerFoundationScholarship
 );
 
-// GET /scholarship/applicants - Retrieve all Scholarship Applicants
 router.get("/applicants", getAllScholarshipApplicants);
+router.get("/foundation/applicants", getAllAkpoazaaScholarshipApplicants);
 
 router.get("/verify-email", verifyEmail);
 

@@ -20,9 +20,9 @@ app.use(
   cors({
     origin: (origin, callback) => {
       if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, origin); // ✅ Allow the request if the origin is in the list
+        callback(null, origin);
       } else {
-        callback(new Error("Not allowed by CORS")); // ❌ Reject if not in the list
+        callback(new Error("Not allowed by CORS"));
       }
     },
     methods: ["POST", "GET", "PUT", "DELETE"],
@@ -31,13 +31,11 @@ app.use(
   })
 );
 
-// Connect to MongoDB
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.log("MongoDB Connection Error:", err));
 
-// Use routes
 app.use("/api", contactRoutes);
 app.use("/api/scholarship", scholarshipRoutes);
 app.use("/api/donations", donationRoutes);
