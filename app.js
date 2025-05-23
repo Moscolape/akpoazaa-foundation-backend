@@ -43,5 +43,5 @@ app.use("/api/scholarship", scholarshipRoutes);
 app.use("/api/donations", donationRoutes);
 app.use("/api/auth", authRoutes);
 
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
